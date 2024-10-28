@@ -1,0 +1,439 @@
+/* === Reset and Base Styles === */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Body Layout */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+    line-height: 1.4;
+    color: #333;
+    max-width: 1100px;
+    margin: 0 auto;
+    font-size: 13px;
+    padding: 5px;
+}
+
+/* === Zone Layout === */
+.zone {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+/* === Input Widths === */
+.ship-input {
+    width: 150px;
+}
+
+.credits-input,
+.amount-input {
+    width: 150px;
+}
+
+.storage-input {
+    width: 50px;
+}
+
+.berth-input,
+.tiny-input {
+    width: 50px;
+}
+
+.broker-name-input {
+    width: 150px;
+}
+
+.dm-input {
+    width: 35px;
+}
+
+/* === Credits Section === */
+.credits-container {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* === Cargo Section === */
+.cargo-good-select {
+    width: 150px;
+}
+
+#cargo-tons {
+    width: 50px;
+}
+
+/* === Table Styles === */
+#cargo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+#cargo-table th,
+#cargo-table td {
+    padding: 4px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#cargo-table input[type="number"] {
+    width: 50px;
+    padding: 2px;
+}
+
+/* === Form Styles === */
+.form-group {
+    margin-bottom: 0; /* Remove bottom margin since we're using gap */
+}
+
+label {
+    display: block;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 3px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+/* === Button Styles === */
+button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+}
+
+.small-button {
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background-color: #9ca3af;
+}
+
+/* === Tab Styles === */
+.tabs {
+    margin-top: 5px;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #e0e0e0; /* Gray background for inactive tabs */
+    color: black; /* Black text for inactive tabs */
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.tab-button.active {
+    background-color: #2563eb; /* Blue background for active tab */
+    color: white; /* White text for active tab */
+}
+
+.tab-content {
+    display: none;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* === Status Bar === */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    background: #f8f9fa;
+    border-top: 1px solid #ddd;
+    text-align: right;
+    font-size: 12px;
+}
+
+.save-indicator {
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.save-indicator.saved {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.save-indicator.unsaved {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* === Section Layout === */
+.section {
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* === Trade Codes Grid === */
+.trade-codes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.trade-code-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    background-color: #f9fafb;
+}
+
+.trade-code-item:hover {
+    background-color: #f3f4f6;
+}
+
+.trade-code-checkbox {
+    margin-right: 4px;
+}
+
+/* === Supplier and Goods Tables === */
+.goods-tables {
+    display: flex;
+    gap: 15px;
+}
+
+.goods-table,
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.goods-table th,
+.goods-table td,
+.results-table th,
+.results-table td {
+    padding: 4px;
+    border: 1px solid #ddd;
+}
+
+.goods-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.goods-table tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+.goods-table tbody tr.selected {
+    background-color: #dbeafe;
+}
+
+/* === Trade Categories === */
+.goods-table tbody tr.common {
+    background-color: #d1fae5;
+}
+
+.goods-table tbody tr.world-specific {
+    background-color: #fef3c7;
+}
+
+.goods-table tbody tr.extra {
+    background-color: #dbeafe;
+}
+
+.goods-table tbody tr.common.selected {
+    background-color: #6ee7b7;
+}
+
+.goods-table tbody tr.world-specific.selected {
+    background-color: #fcd34d;
+}
+
+.goods-table tbody tr.extra.selected {
+    background-color: #93c5fd;
+}
+
+/* === Supplier Results Box === */
+.result-box {
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin: 10px 0;
+    background-color: #f9fafb;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+}
+
+.result-box.success {
+    border-color: #34d399;
+    background-color: #d1fae5;
+}
+
+.result-box.failure {
+    border-color: #f87171;
+    background-color: #fee2e2;
+}
+
+/* === Form Controls === */
+.form-select {
+    padding: 4px 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 13px;
+}
+
+.form-input {
+    padding: 4px 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* === Specific Input Widths === */
+.starport-input {
+    width: 70px;
+}
+
+.population-input {
+    width: 70px;
+}
+
+.supplier-input {
+    width: 180px;
+}
+
+.dice-input {
+    width: 50px;
+}
+
+/* === Goods Table Container === */
+.goods-table-container {
+    flex: 1;
+}
+/* Default styling: hide all tab content */
+.tab-content {
+    display: none;
+}
+/* Display only the active tab content */
+.tab-content.active {
+    display: block;
+}
+
+/* Add these styles */
+.controls-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end; /* This aligns items at the bottom, accounting for labels */
+    margin-bottom: 15px;
+}
+
+.supplier-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+/* Add alignment for Starport, Population, and Supplier fields */
+.starport-population-section {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.results-table tbody tr {
+    cursor: pointer;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+.results-table tbody tr.selected {
+    background-color: #dbeafe;
+}
+
+.tons-input {
+    width: 70px;
+}
+/* Styling for the passenger form rows */
+.passenger-form-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Styling for form groups in the passenger form */
+.passenger-form-group {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+/* Container for the passenger tables */
+.passenger-tables-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Styling for individual tables */
+.passenger-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.passenger-table th, .passenger-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.passenger-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+

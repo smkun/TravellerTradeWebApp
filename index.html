@@ -1,0 +1,633 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>MG Traveller Trade Simulator</title>
+        <link
+            rel="stylesheet"
+            href="styles.css" />
+    </head>
+    <body>
+        <h1 class="mb-4">MG Traveller Trade Simulator</h1>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button
+                    class="tab-button active"
+                    data-tab="ship-data">
+                    Ship Data
+                </button>
+                <button
+                    class="tab-button"
+                    data-tab="spec-buy">
+                    Spec. Buy
+                </button>
+                <button
+                    class="tab-button"
+                    data-tab="spec-sell">
+                    Spec. Sell
+                </button>
+                <button class="tab-button" data-tab="passenger">Passengers</button>
+            </div>
+
+            <!-- Ship Data Tab -->
+            <div
+                id="ship-data"
+                class="tab-content active">
+                <!-- Ship Info Section -->
+                <div class="zone ship-info">
+                    <div class="form-group">
+                        <label for="ship-name">Ship Name:</label>
+                        <input
+                            type="text"
+                            id="ship-name"
+                            class="ship-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="credits">Credits:</label>
+                        <div class="credits-container">
+                            <input
+                                type="number"
+                                id="credits"
+                                class="credits-input"
+                                readonly />
+                            <input
+                                type="number"
+                                id="credit-amount"
+                                class="amount-input"
+                                placeholder="Amount" />
+                            <button
+                                onclick="handleCreditsChange('add')"
+                                class="small-button">
+                                +
+                            </button>
+                            <button
+                                onclick="handleCreditsChange('remove')"
+                                class="small-button">
+                                -
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cargo-space">Total Storage Tons:</label>
+                        <input
+                            type="number"
+                            id="cargo-space"
+                            class="storage-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="available-cargo"
+                            >Available Storage Tons:</label
+                        >
+                        <input
+                            type="number"
+                            id="available-cargo"
+                            class="storage-input"
+                            readonly />
+                    </div>
+                </div>
+
+                <!-- Passenger Berths Section -->
+                <div class="zone passenger-berths">
+                    <div class="form-group">
+                        <label for="high-berths">High:</label>
+                        <input
+                            type="number"
+                            id="high-berths"
+                            class="berth-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="middle-berths">Middle:</label>
+                        <input
+                            type="number"
+                            id="middle-berths"
+                            class="berth-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="basic-berths">Basic:</label>
+                        <input
+                            type="number"
+                            id="basic-berths"
+                            class="berth-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="low-berths">Low:</label>
+                        <input
+                            type="number"
+                            id="low-berths"
+                            class="berth-input" />
+                    </div>
+                </div>
+
+                <!-- Broker Information Section -->
+                <div class="zone broker-info">
+                    <div class="form-group">
+                        <label for="broker-name">Broker Name:</label>
+                        <input
+                            type="text"
+                            id="broker-name"
+                            class="broker-name-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="broker-int">INT:</label>
+                        <input
+                            type="number"
+                            id="broker-int"
+                            class="tiny-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="broker-soc">SOC:</label>
+                        <input
+                            type="number"
+                            id="broker-soc"
+                            class="tiny-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="broker-edu">EDU:</label>
+                        <input
+                            type="number"
+                            id="broker-edu"
+                            class="tiny-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="broker-skill">Broker Skill:</label>
+                        <input
+                            type="number"
+                            id="broker-skill"
+                            class="tiny-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="computer-skill">Admin Skill:</label>
+                        <input
+                            type="number"
+                            id="computer-skill"
+                            class="tiny-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="streetwise-skill">Streetwise Skill:</label>
+                        <input
+                            type="number"
+                            id="streetwise-skill"
+                            class="tiny-input" />
+                    </div>
+                </div>
+
+                <!-- Chief Steward Section -->
+                <div class="zone chief-steward">
+                    <label for="steward-skill">Chief Steward: DM</label>
+                    <input
+                        type="number"
+                        id="steward-skill"
+                        class="dm-input" />
+                </div>
+
+                <!-- Cargo List Section -->
+                <div class="zone cargo-list">
+                    <label for="cargo-good">Good:</label>
+                    <select
+                        id="cargo-good"
+                        class="cargo-good-select">
+                        <option value="">Select a good</option>
+                    </select>
+                    <label for="cargo-tons">Ton:</label>
+                    <input
+                        type="number"
+                        id="cargo-tons"
+                        min="1"
+                        placeholder="Tons"
+                        class="tiny-input" />
+                    <button
+                        onclick="addCargoFromForm()"
+                        class="small-button">
+                        Add
+                    </button>
+                </div>
+                <table id="cargo-table">
+                    <thead>
+                        <tr>
+                            <th>Good</th>
+                            <th>Tons</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <!-- Save and Load Buttons -->
+                <div class="mt-4">
+                    <button onclick="saveShipData()">Save Ship Data</button>
+                    <button onclick="loadShipData()">Load Ship Data</button>
+                    <input
+                        type="file"
+                        id="load-file"
+                        style="display: none"
+                        accept=".json"
+                        onchange="handleFileLoad(event)" />
+                </div>
+            </div>
+
+            <!-- Spec Buy Tab -->
+            <div
+                id="spec-buy"
+                class="tab-content">
+                <!-- Trade Codes Section -->
+                <div class="section trade-codes-section">
+                    <h3>Trade Codes</h3>
+                    <div class="trade-codes-grid">
+                        <!-- Trade codes will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Starport and Population Section -->
+                <div class="section starport-population-section">
+                    <div class="form-group">
+                        <label for="starport-class">Starport Class:</label>
+                        <select
+                            id="starport-class"
+                            class="form-select starport-input">
+                            <option value="">Select...</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="X">X</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="population">Population:</label>
+                        <select
+                            id="population"
+                            class="form-select population-input">
+                            <option value="">Select...</option>
+                            <option value="X">X</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Supplier Section -->
+                <div class="section supplier-section">
+                    <div class="form-group">
+                        <label for="supplier-type">Find Supplier:</label>
+                        <select
+                            id="supplier-type"
+                            class="form-select supplier-input">
+                            <option value="">Select...</option>
+                            <option value="Legitimate">Legitimate</option>
+                            <option value="Legitimate Online (TL-8+)">
+                                Legitimate Online (TL-8+)
+                            </option>
+                            <option value="Black Market">Black Market</option>
+                        </select>
+                        <button
+                            onclick="findSupplier()"
+                            class="action-button">
+                            Find Supplier
+                        </button>
+                    </div>
+                    <div
+                        id="supplier-result"
+                        class="result-box"></div>
+                </div>
+
+                <!-- Available Goods Section -->
+                <div class="section available-goods-section">
+                    <h3 class="section-title">Available Goods</h3>
+                    <button
+                        onclick="generateGoods()"
+                        disabled
+                        id="generate-goods-btn">
+                        Generate Goods
+                    </button>
+                    <div class="goods-tables">
+                        <table
+                            id="goods-table-left"
+                            class="goods-table">
+                            <thead>
+                                <tr>
+                                    <th>Good</th>
+                                    <th>Base Price</th>
+                                    <th>Tons</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <table
+                            id="goods-table-right"
+                            class="goods-table">
+                            <thead>
+                                <tr>
+                                    <th>Good</th>
+                                    <th>Base Price</th>
+                                    <th>Tons</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Negotiation Section -->
+                <div class="section negotiation-section">
+                    <h3 class="section-title">Negotiate Purchase</h3>
+                    <div class="form-group">
+                        <label for="dice-roll">3D6 Roll:</label>
+                        <input
+                            type="number"
+                            id="dice-roll"
+                            class="dice-input"
+                            min="3"
+                            max="18" />
+                    </div>
+                    <button onclick="negotiatePurchase()">Negotiate</button>
+                    <!-- Add the new elements here -->
+                    <div class="form-group">
+                        <label for="tons-to-buy">Tons to Buy:</label>
+                        <input
+                            type="number"
+                            id="tons-to-buy"
+                            class="tons-input"
+                            min="1" />
+                    </div>
+                    <button onclick="buySelectedGood()">Buy Selected</button>
+                </div>
+
+                <!-- Results Section -->
+                <div class="section results-section">
+                    <h3 class="section-title">Results</h3>
+                    <table
+                        id="results-table"
+                        class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Good</th>
+                                <th>Price</th>
+                                <th>Tons</th>
+                                <th>Roll Details</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!-- Reset Button -->
+                <button onclick="resetSpecBuyTab()">Reset</button>
+            </div>
+
+            <!-- Spec Sell Tab -->
+            <div id="spec-sell" class="tab-content">
+                <div class="section trade-codes-section">
+                    <h3 class="section-title">Trade Codes</h3>
+                    <div class="trade-codes-grid"></div>
+                </div>
+
+                <div class="section starport-population-section">
+                    <div class="form-group">
+                        <label>Starport Class:</label>
+                        <select id="sell-starport-class" class="form-select starport-input">
+                            <option value="">Select...</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="X">X</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Population:</label>
+                        <select id="sell-population" class="form-select population-input">
+                            <option value="">Select...</option>
+                            <option value="X">X</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section buyer-section">
+                    <div class="form-group supplier-controls">
+                        <label>Find Buyer:</label>
+                        <select id="buyer-type" class="form-select supplier-input">
+                            <option value="">Select...</option>
+                            <option value="Legitimate">Legitimate</option>
+                            <option value="Legitimate Online (TL-8+)">Legitimate Online (TL-8+)</option>
+                            <option value="Black Market">Black Market</option>
+                        </select>
+                        <button onclick="findBuyer()" class="action-button">Find Buyer</button>
+                    </div>
+                    <div id="buyer-result" class="result-box"></div>
+                </div>
+
+                <div class="section available-cargo-section">
+                    <h3 class="section-title">Available Cargo</h3>
+                    <table id="sell-cargo-table" class="goods-table">
+                        <thead>
+                            <tr>
+                                <th>Good</th>
+                                <th>Tons</th>
+                                <th>Base Price</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="section negotiation-section">
+                    <h3 class="section-title">Negotiate Sale</h3>
+                    <div class="form-group">
+                        <label>3D6 Roll:</label>
+                        <input type="number" id="sell-dice-roll" class="form-input dice-input">
+                        <button onclick="negotiateSale()" id="negotiate-btn">Negotiate</button>
+                    </div>
+                </div>
+
+                <div class="section results-section">
+                    <h3 class="section-title">Results</h3>
+                    <table id="sell-results-table" class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Good</th>
+                                <th>Price</th>
+                                <th>Tons</th>
+                                <th>Roll Details</th>
+                                <th>Percentage</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <button onclick="resetSpecSellTab()" class="mt-4">Reset</button>
+            </div>
+
+            <!-- Passenger Tab Content -->
+<div id="passenger" class="tab-content">
+    <div class="section">
+        <h3>Passenger Traffic</h3>
+        <div class="passenger-form-row">
+            <div class="passenger-form-group">
+                <label for="starport-class">Starport:</label>
+                <select id="starport-class">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="X">X</option>
+                </select>
+            </div>
+            <div class="passenger-form-group">
+                <label for="population">Population:</label>
+                <select id="population">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="generatePassengerTraffic()">Generate Passenger Traffic</button>
+    </div>
+
+    <h3>Available Passengers</h3>
+    <div class="passenger-tables-container">
+        <table id="high-passenger-table" class="passenger-table">
+            <thead>
+                <tr>
+                    <th colspan="3">High Passage</th>
+                </tr>
+                <tr>
+                    <th>Parsecs</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <table id="middle-passenger-table" class="passenger-table">
+            <thead>
+                <tr>
+                    <th colspan="3">Middle Passage</th>
+                </tr>
+                <tr>
+                    <th>Parsecs</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <table id="basic-passenger-table" class="passenger-table">
+            <thead>
+                <tr>
+                    <th colspan="3">Basic Passage</th>
+                </tr>
+                <tr>
+                    <th>Parsecs</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <table id="low-passenger-table" class="passenger-table">
+            <thead>
+                <tr>
+                    <th colspan="3">Low Passage</th>
+                </tr>
+                <tr>
+                    <th>Parsecs</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <h3>Passenger Manifest</h3>
+    <table id="passenger-manifest-table" class="passenger-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Parsecs</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span
+                id="save-indicator"
+                class="save-indicator saved"
+                >All changes saved</span
+            >
+        </div>
+
+        <script src="obfuscated.js"></script>
+        <script>
+            document.addEventListener("contextmenu", function(event) {
+                event.preventDefault(); // Disables right-click
+            });
+        
+            document.onkeydown = function(e) {
+                // Disable F12
+                if (e.keyCode == 123) {
+                    return false;
+                }
+                // Disable Ctrl+Shift+I (DevTools)
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                    return false;
+                }
+                // Disable Ctrl+U (View Source)
+                if (e.ctrlKey && e.keyCode == 85) {
+                    return false;
+                }
+            }
+        </script>
+        
+    </body>
+</html>
